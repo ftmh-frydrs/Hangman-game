@@ -1,5 +1,5 @@
 body{
-    background-image: linear-gradient(to right top, #e4d9df, #e4d5e5, #dcd3ee, #cbd4f8, #b2d6ff, #add5fb, #a9d3f8, #a5d2f4, #b4cce9, #bec8dc, #c3c4cf, #c2c2c2);
+    background-image: linear-gradient(to bottom, #00dafa, #3bdefa, #55e1fa, #68e5fb, #79e8fb, #8feafd, #a2edfe, #b4efff, #cef1ff, #e4f4ff, #f5f8ff, #ffffff);
     background-repeat: no-repeat;
     height: 100vh;
 }
