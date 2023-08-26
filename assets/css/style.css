@@ -1,0 +1,25 @@
+body{
+    background-image: linear-gradient(to right top, #e4d9df, #e4d5e5, #dcd3ee, #cbd4f8, #b2d6ff, #add5fb, #a9d3f8, #a5d2f4, #b4cce9, #bec8dc, #c3c4cf, #c2c2c2);
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+@font-face {
+    font-family: 'Comic Sans MS';
+    src: url('./fonts/comicsans.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Comic Sans MS', sans-serif; 
+}
+
+.bacground{
+    background-image: url(../image/8.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: border-box;
+    background-origin: border-box;
+    background-position: center;
+}
