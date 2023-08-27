@@ -1,4 +1,5 @@
 const words = {
+    // Colors category
     colors: [
         "red",
         "green",
@@ -7,6 +8,8 @@ const words = {
         "orange",
         "purple"
     ],
+
+    // Cars category
     cars: [
         "mustang",
         "corvette",
@@ -15,6 +18,8 @@ const words = {
         "charger",
         "ferrari"
     ],
+
+    // Fruits category
     fruits: [
         "apple",
         "blueberry",
@@ -23,6 +28,8 @@ const words = {
         "pomegranate",
         "watermelon"
     ],
+
+    // Animals category
     animals: [
         'Cat',
         'Dog',
@@ -34,11 +41,13 @@ const words = {
         'Snake',
         'Leopard',
     ],
+
+    // Home items category
     home: [
         'Fork',
         'Knife',
         'Spoon',
-        'Chopst',
+        'Chopsticks',
         'Napkin',
         'Glass',
         'Plate',
@@ -46,6 +55,8 @@ const words = {
         'Teaspoon',
         'Mug'
     ],
+
+    // Food items category
     food: [
         'Pizza',
         'Burger',
@@ -58,6 +69,32 @@ const words = {
         'Rice',
         'Soup',
     ],
-
 };
 
+
+// Function to select a category and update the word list
+function selectCategory(category) {
+    switch(category) {
+      case 'colors':
+        words = words.colors;
+        break;
+      case 'cars':
+        words = words.cars;
+        break;
+      case 'fruits':
+        words = words.fruits;
+        break;
+      case 'animals':
+        words = words.animals;
+        break;
+      case 'home':
+        words = words.home;
+        break;
+      case 'food':
+        words = words.food;
+        break;
+      default:
+        words = ['hangman', 'game', 'javascript', 'programming', 'computer', 'web'];
+    }
+  }
+  
