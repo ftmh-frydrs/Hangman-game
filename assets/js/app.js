@@ -1,3 +1,12 @@
+
+let min = 0;
+let max = 6;
+let answer = '';
+let word = null;
+let text = '';
+let guessed = false;
+let wordEl = document.querySelector("#word");
+
 const words = {
     // Colors category
     colors: [
@@ -74,27 +83,31 @@ const words = {
 
 // Function to select a category and update the word list
 function selectCategory(category) {
-    switch(category) {
-      case 'colors':
-        words = words.colors;
-        break;
-      case 'cars':
-        words = words.cars;
-        break;
-      case 'fruits':
-        words = words.fruits;
-        break;
-      case 'animals':
-        words = words.animals;
-        break;
-      case 'home':
-        words = words.home;
-        break;
-      case 'food':
-        words = words.food;
-        break;
-      default:
-        words = ['hangman', 'game', 'javascript', 'programming', 'computer', 'web'];
-    }
+  let selectedWords = [];
+  
+  switch(category) {
+    case 'colors':
+      selectedWords = words.colors;
+      break;
+    case 'cars':
+      selectedWords = words.cars;
+      break;
+    case 'fruits':
+      selectedWords = words.fruits;
+      break;
+    case 'animals':
+      selectedWords = words.animals;
+      break;
+    case 'home':
+      selectedWords = words.home;
+      break;
+    case 'food':
+      selectedWords = words.food;
+      break;
+    default:
+      selectedWords = ['hangman', 'game', 'javascript', 'programming', 'computer', 'web'];
   }
+
+}
+
   

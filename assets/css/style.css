@@ -1,4 +1,5 @@
 body{
+    font-family: 'Comic Sans MS', sans-serif; 
     background-image: linear-gradient(to bottom, #00dafa, #3bdefa, #55e1fa, #68e5fb, #79e8fb, #8feafd, #a2edfe, #b4efff, #cef1ff, #e4f4ff, #f5f8ff, #ffffff);
     background-repeat: no-repeat;
     height: 100vh;
@@ -9,10 +10,6 @@ body{
     src: url('./fonts/comicsans.ttf') format('truetype'); 
     font-weight: normal;
     font-style: normal;
-}
-
-body{
-    font-family: 'Comic Sans MS', sans-serif; 
 }
 
 .bacground{
