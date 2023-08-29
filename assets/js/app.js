@@ -3,7 +3,7 @@ let min = 0;
 let max = 6;
 let answer = '';
 let word = null;
-let text = '';
+let text = [];
 let guessed = false;
 let wordEl = document.querySelector("#word");
 
@@ -108,6 +108,36 @@ function selectCategory(category) {
       selectedWords = ['hangman', 'game', 'javascript', 'programming', 'computer', 'web'];
   }
 
+  generateKeyboardButtons();
+  rendoWords();
+
 }
 
-  
+  // Function to randomly select a word from the categories
+  const rendoWords = () => {
+    answer= words[Math.floor(Math.random() * 6 )];
+};
+
+// Function to generate keyboard buttons
+const generateKeyboardButtons = () => {
+const keyboardBtns = 'qwertyuiopasdfghjklzxcvbnm'.split('').map(event => `
+<button class="btnEl border m-1 h-8 w-8 rounded-lg"
+    id="${event}"
+    onClick="keyboardHandling('${event}')">
+    ${event}
+</button>
+`         
+  ).join('');
+
+  document.querySelector('#keyboard').innerHTML=keyboardBtns;
+};
+
+
+const keyboardHandling = key => {
+
+if(!text.includes(key)) {
+  text.push(key);
+  document.getElementById(key).classList.add('bg-gray-400');
+}
+}
+
