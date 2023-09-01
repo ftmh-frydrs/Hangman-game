@@ -1,11 +1,10 @@
-
 let min = 0;
-let max = 6;
+let max = 7;
 let answer = '';
 let word = null;
 let text = [];
 let guessed = false;
-let wordEl = document.querySelector("#word");
+let wordEl = document.getElementById('word');
 
 const words = {
     // Colors category
@@ -51,7 +50,7 @@ const words = {
         'Leopard',
     ],
 
-    // Home items category
+    // Home category
     home: [
         'Fork',
         'Knife',
@@ -65,79 +64,70 @@ const words = {
         'Mug'
     ],
 
-    // Food items category
+    // Food category
     food: [
         'Pizza',
         'Burger',
         'Pasta',
         'Salad',
-        'Stew',
-        'Sushi',
-        'Cake',
-        'Kebab',
-        'Rice',
-        'Soup',
-    ],
+        'Stew'
+    ]
 };
 
 
-// Function to select a category and update the word list
-function selectCategory(category) {
-  let selectedWords = [];
-  
-  switch(category) {
-    case 'colors':
-      selectedWords = words.colors;
-      break;
-    case 'cars':
-      selectedWords = words.cars;
-      break;
-    case 'fruits':
-      selectedWords = words.fruits;
-      break;
-    case 'animals':
-      selectedWords = words.animals;
-      break;
-    case 'home':
-      selectedWords = words.home;
-      break;
-    case 'food':
-      selectedWords = words.food;
-      break;
-    default:
-      selectedWords = ['hangman', 'game', 'javascript', 'programming', 'computer', 'web'];
-  }
 
-  generateKeyboardButtons();
-  rendoWords();
-
+// Render the word with hidden letters
+const renderWord = () => {
+    let displayedWord = '';
+    for (let i = 0; i < answer.length; i++) {
+        if (text.includes(answer[i].toLowerCase())) {
+            displayedWord += answer[i];
+        } else {
+            displayedWord += '_';
+        }
+        displayedWord += ' ';
+    }
+    
+    if (wordEl) {
+        wordEl.textContent = displayedWord.trim();
+    } else {
+        console.error("Element with ID 'word' not found.");
+    }
 }
 
-  // Function to randomly select a word from the categories
-  const rendoWords = () => {
-    answer= words[Math.floor(Math.random() * 6 )];
-};
-
-// Function to generate keyboard buttons
+// Generate the keyboard buttons
 const generateKeyboardButtons = () => {
-const keyboardBtns = 'qwertyuiopasdfghjklzxcvbnm'.split('').map(event => `
-<button class="btnEl border m-1 h-8 w-8 rounded-lg"
-    id="${event}"
-    onClick="keyboardHandling('${event}')">
-    ${event}
-</button>
+    const keyboardBtns = 'qwertyuiopasdfghjklzxcvbnm'.split('').map(event => `
+             <button class="btnEl border m-1 h-8 w-8 rounded-lg"
+              id="${event}"
+              onClick="guessLetter('${event}')">
+              ${event}
+             </button>
 `         
   ).join('');
 
-  document.querySelector('#keyboard').innerHTML=keyboardBtns;
-};
+             document.querySelector('#keyboard').innerHTML=keyboardBtns;
+    };
 
-
-const keyboardHandling = key => {
-
-if(!text.includes(key)) {
-  text.push(key);
-  document.getElementById(key).classList.add('bg-gray-400');
+// Guess a letter
+const guessLetter = letter => {
+    letter = letter.toLowerCase();
+    if (!guessed && !text.includes(letter)) {
+        text.push(letter);
+        document.getElementById(letter).classList.add('bg-gray-400');
+        if (!answer.toLowerCase().includes(letter)) {
+            max--;
+        }
+        renderWord();
+    }
 }
+
+
+// Initialize the game
+const initGame = () => {
+    generateKeyboardButtons();
+    renderWord();
 }
 
+// Start the game
+initGame();
