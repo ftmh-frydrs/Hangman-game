@@ -116,10 +116,16 @@ const guessLetter = letter => {
         text.push(letter);
         document.getElementById(letter).classList.add('bg-gray-400');
         if (!answer.toLowerCase().includes(letter)) {
-            max--;
+            min++;
+            picture();
         }
         renderWord();
     }
+}
+
+
+const picture = () => {
+  document.querySelector(".img").src = "./assets/image/" + min + ".png";
 }
 
 
