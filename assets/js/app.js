@@ -173,7 +173,31 @@ function picture() {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
   }
   
+  // Check the game status (win/lose)
+  function checkGameStatus() {
+    if (min >= max) { 
+      alert('You lose!');
+      resetGame();
+    } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
+      alert('Congratulations! You win!');
+      resetGame();
+    }
+  }
   
+// Reset the game
+function resetGame() {
+    answer = '';
+    word = null;
+    text = [];
+    guessed = false;
+    wordEl.textContent = '';
+    selectCategory('colors')
+    generateKeyboardButtons();
+    renderWord();
+    min = 0;
+    picture()
+}
+
 // Initialize the game
 function initGame() {
     selectCategory('colors')
