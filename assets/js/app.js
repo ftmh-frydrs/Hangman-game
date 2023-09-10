@@ -4,7 +4,7 @@ let answer = '';
 let word = null;
 let text = [];
 let guessed = false;
-let wordEl = document.getElementById('word');
+let wordEl = document.getElementById('text');
 
 const words = {
     // Colors category
@@ -103,7 +103,8 @@ function selectCategory(category) {
     }
 
     word = categoryWords[Math.floor(Math.random() * categoryWords.length)];
-    answer = word.toLowerCase();
+    console.log(word);
+    return  word.toLowerCase();;
     // resetGame();
     // initGame(); 
 }
@@ -175,8 +176,9 @@ function picture() {
   
   // Check the game status (win/lose)
   function checkGameStatus() {
-    if (min >= max) { 
-      alert('You lose!');
+    if (min == max) {
+        wordEl.innerHTML = "The Answer Was: " + answer;
+        document.querySelector("#keyboard").innerHTML = "You Lost !";
       resetGame();
     } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
       alert('Congratulations! You win!');
@@ -191,20 +193,18 @@ function resetGame() {
     text = [];
     guessed = false;
     wordEl.textContent = '';
-    selectCategory('colors')
-    generateKeyboardButtons();
-    renderWord();
+    answer = selectCategory();
     min = 0;
-    picture()
+    picture();
 }
 
 // Initialize the game
 function initGame() {
-    selectCategory('colors')
+    answer = selectCategory()
     generateKeyboardButtons();
     renderWord();
 }
 
 // Start the game
 initGame();
-picture()
+picture();
