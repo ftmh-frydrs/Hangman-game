@@ -5,74 +5,77 @@ let word = null;
 let text = [];
 let guessed = false;
 let wordEl = document.getElementById('text');
+const continueBtn = document.querySelector('.continue');
+const descriptionEl = document.getElementById('description');
 
 const words = {
     // Colors category
     colors: [
-        "red",
-        "green",
-        "blue",
-        "yellow",
-        "orange",
-        "purple"
+        { word: "red", description: "A primary color often associated with love, passion, and intensity." },
+        { word: "green", description: "A color commonly found in nature, symbolizing growth, health, and renewal." },
+        { word: "blue", description: "A calming color often associated with the sky and the ocean." },
+        { word: "yellow", description: "A bright and cheerful color representing happiness and energy." },
+        { word: "orange", description: "A warm color that combines the energy of red and the happiness of yellow." },
+        { word: "purple", description: "A color associated with royalty, luxury, and creativity." }
     ],
 
     // Cars category
     cars: [
-        "mustang",
-        "corvette",
-        "camaro",
-        "challenger",
-        "charger",
-        "ferrari"
+        { word: "mustang", description: "A famous model of sports car manufactured by Ford." },
+        { word: "corvette", description: "A high-performance sports car produced by Chevrolet." },
+        { word: "camaro", description: "Another popular sports car model from Chevrolet." },
+        { word: "challenger", description: "A powerful muscle car produced by Dodge." },
+        { word: "charger", description: "A sedan and muscle car model from Dodge." },
+        { word: "ferrari", description: "An Italian luxury sports car manufacturer known for its high-speed cars." }
     ],
 
     // Fruits category
     fruits: [
-        "apple",
-        "blueberry",
-        "mandarin",
-        "pineapple",
-        "pomegranate",
-        "watermelon"
+        { word: "apple", description: "A widely consumed fruit known for its crisp texture and sweet or tart taste." },
+        { word: "blueberry", description: "A small, round fruit with a sweet and slightly tangy flavor." },
+        { word: "mandarin", description: "A small citrus fruit with a sweet and easy-to-peel skin." },
+        { word: "pineapple", description: "A tropical fruit known for its sweet and tangy taste." },
+        { word: "pomegranate", description: "A fruit with juicy seeds, often associated with health benefits." },
+        { word: "watermelon", description: "A refreshing and hydrating fruit, especially popular in hot weather." }
     ],
 
     // Animals category
     animals: [
-        'Cat',
-        'Dog',
-        'Penguin',
-        'Lion',
-        'Horse',
-        'Elephant',
-        'Rabbit',
-        'Snake',
-        'Leopard',
+        { word: "cat", description: "A domesticated feline known for its independent and playful nature." },
+        { word: "dog", description: "A loyal and friendly domesticated animal often kept as a pet." },
+        { word: "penguin", description: "A flightless bird known for its distinctive appearance and waddling walk." },
+        { word: "lion", description: "A majestic big cat, often referred to as the 'king of the jungle.'" },
+        { word: "horse", description: "A domesticated animal used for transportation, work, and recreation." },
+        { word: "elephant", description: "A large, intelligent mammal known for its size and strength." },
+        { word: "rabbit", description: "A small mammal with long ears and a fluffy tail." },
+        { word: "snake", description: "A reptile known for its elongated body and lack of legs." },
+        { word: "leopard", description: "A big cat known for its striking spots and powerful build." }
     ],
 
     // Home category
     home: [
-        'Fork',
-        'Knife',
-        'Spoon',
-        'Chopsticks',
-        'Napkin',
-        'Glass',
-        'Plate',
-        'Bowl',
-        'Teaspoon',
-        'Mug'
+        { word: "fork", description: "A utensil with prongs used for eating and serving food." },
+        { word: "knife", description: "A sharp-edged tool used for cutting and slicing." },
+        { word: "spoon", description: "A utensil with a shallow bowl-shaped end used for eating and stirring." },
+        { word: "chopsticks", description: "Utensils traditionally used in East Asian cuisine for picking up food." },
+        { word: "napkin", description: "A piece of fabric used for wiping the mouth and hands during meals." },
+        { word: "glass", description: "A container for holding and drinking liquids." },
+        { word: "plate", description: "A flat dish on which food is served." },
+        { word: "bowl", description: "A deep, round dish used for serving and eating food." },
+        { word: "teaspoon", description: "A small spoon used for stirring and measuring small quantities." },
+        { word: "mug", description: "A cylindrical cup often used for hot beverages like coffee or tea." }
     ],
 
     // Food category
     food: [
-        'Pizza',
-        'Burger',
-        'Pasta',
-        'Salad',
-        'Stew'
+        { word: "pizza", description: "A popular Italian dish consisting of a flatbread topped with various ingredients." },
+        { word: "burger", description: "A sandwich made with a ground meat patty, typically beef." },
+        { word: "pasta", description: "Italian noodles available in various shapes and served with various sauces." },
+        { word: "salad", description: "A dish made of mixed greens, vegetables, and often dressings." },
+        { word: "stew", description: "A hearty and slow-cooked dish containing meat, vegetables, and broth." }
     ]
 };
+
 
 async function selCategory(category){
     await localStorage.setItem('category',category);
@@ -108,13 +111,12 @@ const selectCategory = () => {
             break;
     }
 
-    word = categoryWords[Math.floor(Math.random() * categoryWords.length)];
+    word = categoryWords[Math.floor(Math.random() * categoryWords.length)].word;
     console.log(word);
     return  word.toLowerCase();
 }
 
-
-// Render the word with hidden letters
+// Render the word with hidden letters and description
 const renderWord = () => {
     let displayedWord = '';
     for (let i = 0; i < answer.length; i++) {
@@ -129,13 +131,36 @@ const renderWord = () => {
     if (wordEl) {
         wordEl.textContent = displayedWord.trim();
     }
+    
+    const categoryWords = words[localStorage.getItem('category')];
+    const currentWord = categoryWords.find(wordObj => wordObj.word === answer);
+    
+    if (descriptionEl && currentWord) {
+        descriptionEl.textContent = currentWord.description;
+    }
+}
+
+// Check the game status (win/lose) and display description
+const checkGameStatus = () => {
+    if (min == max) {
+        wordEl.innerHTML = "The Answer Was: " + answer;
+        document.querySelector("#keyboard").innerHTML = "You Lost !";
+        
+        const categoryWords = words[localStorage.getItem('category')];
+        const currentWord = categoryWords.find(wordObj => wordObj.word === answer);
+        
+        if (descriptionEl && currentWord) {
+            descriptionEl.textContent = currentWord.description;
+        }
+        resetGame();
+    }
 }
 
 // Generate the keyboard buttons
 const generateKeyboardButtons = () => {
     let keyboardBtns = '';
     for (let i = 65; i <= 90; i++) {
-        let letter = String.fromCharCode(i).toLowerCase(); // Convert to lowercase
+        let letter = String.fromCharCode(i).toLowerCase();
         keyboardBtns += `<button class="btnEl border m-1 h-8 w-8 rounded-lg" data-letter="${letter}" onclick="guessLetter('${letter}', this)">${letter}</button>`;
     }
     
@@ -184,22 +209,10 @@ const picture = () => {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
   }
   
-  // Check the game status (win/lose)
-  const checkGameStatus = () => {
-    if (min == max) {
-        wordEl.innerHTML = "The Answer Was: " + answer;
-        document.querySelector("#keyboard").innerHTML = "You Lost !";
-      resetGame();
-    } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
-        document.querySelector("#keyboard").innerHTML = "You Won !";
-      resetGame();
-    }
-  }
-
-  const continueBtn = document.querySelector('.continue');
   continueBtn.addEventListener('click' , () => {
     initGame();
     continueBtn.style.display = 'none'; 
+    descriptionEl.style.display = 'flex';
   })
 
 // Reset the game
@@ -212,7 +225,8 @@ const resetGame = () => {
     answer = selectCategory();
     min = 0;
     picture();
-    continueBtn.style.display = 'flex'; 
+    continueBtn.style.display = 'flex';
+    descriptionEl.style.display = 'none';
 }
 
 // Initialize the game
