@@ -74,8 +74,14 @@ const words = {
     ]
 };
 
-function selectCategory(category) {
+async function selCategory(category){
+    await localStorage.setItem('category',category);
+    window.location.href = `index.html?category=${category}`;
+}
+
+const selectCategory = () => {
     let categoryWords;
+    let category = localStorage.getItem('category');
     switch (category) {
         case "colors":
             categoryWords = words.colors;
@@ -104,14 +110,12 @@ function selectCategory(category) {
 
     word = categoryWords[Math.floor(Math.random() * categoryWords.length)];
     console.log(word);
-    return  word.toLowerCase();;
-    // resetGame();
-    // initGame(); 
+    return  word.toLowerCase();
 }
 
 
 // Render the word with hidden letters
-function renderWord() {
+const renderWord = () => {
     let displayedWord = '';
     for (let i = 0; i < answer.length; i++) {
         if (text.includes(answer[i].toLowerCase())) {
@@ -124,13 +128,11 @@ function renderWord() {
     
     if (wordEl) {
         wordEl.textContent = displayedWord.trim();
-    } else {
-        console.error("Element with ID 'word' not found.");
     }
 }
 
 // Generate the keyboard buttons
-function generateKeyboardButtons() {
+const generateKeyboardButtons = () => {
     let keyboardBtns = '';
     for (let i = 65; i <= 90; i++) {
         let letter = String.fromCharCode(i);
@@ -140,13 +142,11 @@ function generateKeyboardButtons() {
     const keyboardElement = document.getElementById('keyboard');
     if (keyboardElement) {
         keyboardElement.innerHTML = keyboardBtns;
-    } else {
-        console.error("Element with ID 'keyboard' not found.");
     }
 }
 
 // Guess a letter
-function guessLetter(letter,buttonElement) {
+const guessLetter = (letter,buttonElement) => {
     if (buttonElement) {
         buttonElement.style.backgroundColor = "grey";
     }
@@ -170,24 +170,24 @@ function guessLetter(letter,buttonElement) {
 
 
 
-function picture() {
+const picture = () => {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
   }
   
   // Check the game status (win/lose)
-  function checkGameStatus() {
+  const checkGameStatus = () => {
     if (min == max) {
         wordEl.innerHTML = "The Answer Was: " + answer;
         document.querySelector("#keyboard").innerHTML = "You Lost !";
       resetGame();
     } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
-      alert('Congratulations! You win!');
+        document.querySelector("#keyboard").innerHTML = "You Won !";
       resetGame();
     }
   }
   
 // Reset the game
-function resetGame() {
+const resetGame = () => {
     answer = '';
     word = null;
     text = [];
@@ -199,7 +199,7 @@ function resetGame() {
 }
 
 // Initialize the game
-function initGame() {
+const initGame = () => {
     answer = selectCategory()
     generateKeyboardButtons();
     renderWord();
