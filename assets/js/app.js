@@ -135,8 +135,8 @@ const renderWord = () => {
 const generateKeyboardButtons = () => {
     let keyboardBtns = '';
     for (let i = 65; i <= 90; i++) {
-        let letter = String.fromCharCode(i);
-        keyboardBtns += `<button class="btnEl border m-1 h-8 w-8 rounded-lg" onclick="guessLetter('${letter}', this)">${letter}</button>`;
+        let letter = String.fromCharCode(i).toLowerCase(); // Convert to lowercase
+        keyboardBtns += `<button class="btnEl border m-1 h-8 w-8 rounded-lg" data-letter="${letter}" onclick="guessLetter('${letter}', this)">${letter}</button>`;
     }
     
     const keyboardElement = document.getElementById('keyboard');
@@ -144,6 +144,7 @@ const generateKeyboardButtons = () => {
         keyboardElement.innerHTML = keyboardBtns;
     }
 }
+
 
 // Guess a letter
 const guessLetter = (letter,buttonElement) => {
@@ -168,7 +169,16 @@ const guessLetter = (letter,buttonElement) => {
     }
 }
 
-
+// Add this code inside your script after initializing the game
+document.addEventListener('keydown', (event) => {
+    const letter = event.key.toLowerCase(); // Convert the pressed key to lowercase
+    if (/^[a-z]$/.test(letter)) {
+        const buttonElement = document.querySelector(`button[data-letter="${letter}"]`);
+        if (buttonElement) {
+            guessLetter(letter, buttonElement);
+        }
+    }
+});
 
 const picture = () => {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
@@ -191,7 +201,7 @@ const picture = () => {
     initGame();
     continueBtn.style.display = 'none'; 
   })
-  
+
 // Reset the game
 const resetGame = () => {
     answer = '';
