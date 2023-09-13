@@ -185,6 +185,12 @@ const picture = () => {
       resetGame();
     }
   }
+
+  const continueBtn = document.querySelector('.continue');
+  continueBtn.addEventListener('click' , () => {
+    initGame();
+    continueBtn.style.display = 'none'; 
+  })
   
 // Reset the game
 const resetGame = () => {
@@ -196,6 +202,7 @@ const resetGame = () => {
     answer = selectCategory();
     min = 0;
     picture();
+    continueBtn.style.display = 'flex'; 
 }
 
 // Initialize the game
