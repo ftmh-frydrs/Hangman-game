@@ -134,7 +134,7 @@ const renderWord = () => {
     
     if (wordEl) {
         wordEl.textContent = displayedWord.trim();
-    }
+    }    
     
     const categoryWords = words[localStorage.getItem('category')];
     const currentWord = categoryWords.find(wordObj => wordObj.word === answer);
@@ -147,8 +147,10 @@ const renderWord = () => {
 // Check the game status (win/lose) and display description
 const checkGameStatus = () => {
     if (min == max) {
-        wordEl.innerHTML = "The Answer Was: " + answer;
-        document.querySelector("#keyboard").innerHTML = "You Lost !";
+        document.querySelector("#keyboard").innerHTML = `<p>
+        You Lost !
+        </p>
+        <p>${answer}</p>`;
         gameOverMusic.play();
         music.pause();
         const categoryWords = words[localStorage.getItem('category')];
@@ -158,13 +160,15 @@ const checkGameStatus = () => {
             descriptionEl.textContent = currentWord.description;
             resetGame();
         }
-    }else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
-          document.querySelector("#keyboard").innerHTML = "You Won !";
-          winMusic.play()
-          music.pause();
+    } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
+        wordEl.textContent = "You Won !";
+        winMusic.play();
+        music.pause();
         resetGame();
-      }
+    }
 }
+
+
 
 // Generate the keyboard buttons
 const generateKeyboardButtons = () => {
@@ -218,6 +222,18 @@ document.addEventListener('keydown', (event) => {
 const picture = () => {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
   }
+
+
+const muteButton = document.getElementById('muteButton');
+function toggleMute() {
+    if (music.muted) {
+        music.muted = false;
+        muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+    } else {
+        music.muted = true;
+        muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    }
+}
   
   continueBtn.addEventListener('click' , () => {
     initGame();
@@ -252,3 +268,4 @@ const initGame = () => {
 // Start the game
 initGame();
 picture();
+
