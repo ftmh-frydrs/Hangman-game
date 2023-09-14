@@ -7,6 +7,10 @@ let guessed = false;
 let wordEl = document.getElementById('text');
 const continueBtn = document.querySelector('.continue');
 const descriptionEl = document.getElementById('description');
+const gameOverMusic = document.getElementById('gameover');
+const music = document.getElementById('music');
+const winMusic = document.getElementById('win');
+
 
 const words = {
     // Colors category
@@ -145,15 +149,21 @@ const checkGameStatus = () => {
     if (min == max) {
         wordEl.innerHTML = "The Answer Was: " + answer;
         document.querySelector("#keyboard").innerHTML = "You Lost !";
-        
+        gameOverMusic.play();
+        music.pause();
         const categoryWords = words[localStorage.getItem('category')];
         const currentWord = categoryWords.find(wordObj => wordObj.word === answer);
         
         if (descriptionEl && currentWord) {
             descriptionEl.textContent = currentWord.description;
+            resetGame();
         }
+    }else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
+          document.querySelector("#keyboard").innerHTML = "You Won !";
+          winMusic.play()
+          music.pause();
         resetGame();
-    }
+      }
 }
 
 // Generate the keyboard buttons
@@ -196,7 +206,7 @@ const guessLetter = (letter,buttonElement) => {
 
 // Add this code inside your script after initializing the game
 document.addEventListener('keydown', (event) => {
-    const letter = event.key.toLowerCase(); // Convert the pressed key to lowercase
+    const letter = event.key.toLowerCase(); 
     if (/^[a-z]$/.test(letter)) {
         const buttonElement = document.querySelector(`button[data-letter="${letter}"]`);
         if (buttonElement) {
@@ -213,6 +223,9 @@ const picture = () => {
     initGame();
     continueBtn.style.display = 'none'; 
     descriptionEl.style.display = 'flex';
+    gameOverMusic.pause();
+    music.play()
+    winMusic.pause()
   })
 
 // Reset the game
