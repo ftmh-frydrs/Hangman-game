@@ -148,10 +148,9 @@ const renderWord = () => {
 // Check the game status (win/lose) and display description
 const checkGameStatus = () => {
     if (min == max) {
-        document.querySelector("#keyboard").innerHTML = `<p>
-        You Lost !
-        </p>
-        <p>${answer}</p>`;
+        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="https://media.giphy.com/media/l2JdTxHEW3lVr4EtG/giphy.gif">
+        <p class="text-gray-900 text-2xl pt-2">You Lose </p>
+        <p class="text-gray-900 text-2xl">answer : ${answer}</p>`;
         gameOverMusic.play();
         music.pause();
         const categoryWords = words[localStorage.getItem('category')];
@@ -162,13 +161,17 @@ const checkGameStatus = () => {
             resetGame();
         }
     } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
-        wordEl.textContent = "You Won !";
+        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="https://media.giphy.com/media/xT5LMHxhOfscxPfIfm/giphy.gif">
+        <p class="text-gray-900 text-2xl pt-2">You Win </p>`;
         winMusic.play();
         music.pause();
+        if (!guessed) {
+            stopTimer(); 
+            guessed = true;
+        }
         resetGame();
     }
 }
-
 
 
 // Generate the keyboard buttons
@@ -245,6 +248,44 @@ function toggleMute() {
     winMusic.pause()
   })
 
+const timerIcon = document.getElementById('timer-icon');
+const timer = document.getElementById('timer');
+const timerCountdown = document.getElementById('timer-countdown');
+
+
+let timerInterval; // این خط را اضافه کنید
+
+const startTimer = () => {
+    let seconds = 30;
+    timer.style.display = 'block';
+
+    const updateTimer = () => {
+        timerCountdown.textContent = seconds;
+        seconds--;
+
+        if (seconds < 0) {
+            clearInterval(timerInterval);
+            timer.style.display = 'none';
+            document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="https://media.giphy.com/media/l2JdTxHEW3lVr4EtG/giphy.gif">
+            <p class="text-gray-900 text-2xl pt-2">You Lose </p>
+            <p class="text-gray-900 text-2xl">answer : ${answer}</p>`;
+            gameOverMusic.play();
+            music.pause();
+            descriptionEl.style.display='none';
+            resetGame();
+        }
+    }
+
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000); // تغییر نام این متغیر به timerInterval
+}
+
+const stopTimer =() => {
+    clearInterval(timerInterval);
+}
+
+
+
 // Reset the game
 const resetGame = () => {
     answer = '';
@@ -257,6 +298,8 @@ const resetGame = () => {
     picture();
     continueBtn.style.display = 'flex';
     descriptionEl.style.display = 'none';
+    // timer.style.display = 'none';
+    stopTimer()
 }
 
 // Initialize the game
@@ -264,9 +307,9 @@ const initGame = () => {
     answer = selectCategory()
     generateKeyboardButtons();
     renderWord();
+    startTimer()
 }
 
 // Start the game
 initGame();
 picture();
-
