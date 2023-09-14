@@ -120,6 +120,7 @@ const selectCategory = () => {
     return  word.toLowerCase();
 }
 
+
 // Render the word with hidden letters and description
 const renderWord = () => {
     let displayedWord = '';
