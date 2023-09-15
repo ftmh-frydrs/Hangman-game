@@ -81,16 +81,19 @@ const words = {
 };
 
 
+// Function to set the game category in localStorage and navigate to index.html
 async function selCategory(category){
     await localStorage.setItem('category',category);
     window.location.href = `index.html?category=${category}`;
 }
 
+// Function to set the game mode (with or without time limit) in localStorage and navigate to selection.html
 async function time(t){
     await localStorage.setItem('t',t);
     window.location.href = `selection.html?t=${t}`;
 }
 
+// Function to select the game mode (with or without time limit) and perform actions accordingly
 const selectMode = (mode) => {
     if (mode === 'withTime') {
         startTimer();
@@ -106,8 +109,7 @@ const selectMode = (mode) => {
     }
 }
 
-
-
+// Function to select a random word from the chosen category
 const selectCategory = () => {
     let categoryWords;
     let category = localStorage.getItem('category');
@@ -248,9 +250,9 @@ const picture = () => {
       document.querySelector(".img").src = "./assets/image/" + min + ".png";
   }
 
-
+// Function to toggle mute for the game's music
 const muteButton = document.getElementById('muteButton');
-function toggleMute() {
+const toggleMute = () => {
     if (music.muted) {
         music.muted = false;
         muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
@@ -260,7 +262,8 @@ function toggleMute() {
     }
 }
   
-  continueBtn.addEventListener('click' , () => {
+// Event listener for the "Continue" button click
+continueBtn.addEventListener('click' , () => {
     continueBtn.style.display = 'none'; 
     descriptionEl.style.display = 'flex';
     gameOverMusic.pause();
@@ -273,6 +276,7 @@ function toggleMute() {
 let timerInterval;
 let remainingTime = 30; 
 
+// Function to start the timer
 const startTimer = () => {
     const timer = document.getElementById('timer');
     const timerCountdown = document.getElementById('timer-countdown');
@@ -301,6 +305,7 @@ const startTimer = () => {
     timerInterval = setInterval(updateTimer, 1000); 
 }
 
+// Function to stop the timer
 const stopTimer =() => {
     clearInterval(timerInterval);
 }
