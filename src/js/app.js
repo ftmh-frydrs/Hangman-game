@@ -169,8 +169,8 @@ const renderWord = () => {
 // Check the game status (win/lose) and display description
 const checkGameStatus = () => {
     if (min == max) {
-        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="https://media.giphy.com/media/l2JdTxHEW3lVr4EtG/giphy.gif">
-        <p class="text-gray-900 text-2xl pt-2">You Lose </p>
+        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="../../assets/image/sad.GIF">
+        <p class="text-gray-900 text-2xl pt-2">Game Over</p>
         <p class="text-gray-900 text-2xl">answer : ${answer}</p>`;
         gameOverMusic.play();
         music.pause();
@@ -182,8 +182,8 @@ const checkGameStatus = () => {
             resetGame();
         }
     } else if (answer.toLowerCase().split('').every(letter => text.includes(letter))) {
-        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="https://media.giphy.com/media/xT5LMHxhOfscxPfIfm/giphy.gif">
-        <p class="text-gray-900 text-2xl pt-2">You Win </p>`;
+        document.querySelector("#keyboard").innerHTML = `<img class="w-[200px] h-[130px] mx-auto" src="../../assets/image/happy.GIF">
+        <p class="text-gray-900 text-2xl pt-2"> Congratulations </p>`;
         winMusic.play();
         music.pause();
         if (!guessed) {
