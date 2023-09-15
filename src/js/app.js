@@ -86,6 +86,28 @@ async function selCategory(category){
     window.location.href = `index.html?category=${category}`;
 }
 
+async function time(t){
+    await localStorage.setItem('t',t);
+    window.location.href = `selection.html?t=${t}`;
+}
+
+const selectMode = (mode) => {
+    if (mode === 'withTime') {
+        startTimer();
+    } else if (mode === "withoutTime") {
+        guessed = false;
+        text = [];
+        answer = selectCategory();
+        min = 0;
+        picture();
+        renderWord();
+        generateKeyboardButtons();
+        document.getElementById('timer-icon').style.display="none"
+    }
+}
+
+
+
 const selectCategory = () => {
     let categoryWords;
     let category = localStorage.getItem('category');
@@ -116,7 +138,6 @@ const selectCategory = () => {
     }
 
     word = categoryWords[Math.floor(Math.random() * categoryWords.length)].word;
-    console.log(word);
     return  word.toLowerCase();
 }
 
@@ -240,23 +261,23 @@ function toggleMute() {
 }
   
   continueBtn.addEventListener('click' , () => {
-    initGame();
     continueBtn.style.display = 'none'; 
     descriptionEl.style.display = 'flex';
     gameOverMusic.pause();
     music.play()
     winMusic.pause()
+    initGame();
   })
 
-const timerIcon = document.getElementById('timer-icon');
-const timer = document.getElementById('timer');
-const timerCountdown = document.getElementById('timer-countdown');
 
-
-let timerInterval; // این خط را اضافه کنید
+let timerInterval;
+let remainingTime = 30; 
 
 const startTimer = () => {
-    let seconds = 30;
+    const timer = document.getElementById('timer');
+    const timerCountdown = document.getElementById('timer-countdown');
+
+    let seconds = remainingTime;
     timer.style.display = 'block';
 
     const updateTimer = () => {
@@ -277,7 +298,7 @@ const startTimer = () => {
     }
 
     updateTimer();
-    timerInterval = setInterval(updateTimer, 1000); // تغییر نام این متغیر به timerInterval
+    timerInterval = setInterval(updateTimer, 1000); 
 }
 
 const stopTimer =() => {
@@ -285,9 +306,9 @@ const stopTimer =() => {
 }
 
 
-
 // Reset the game
 const resetGame = () => {
+    remainingTime = 30;
     answer = '';
     word = null;
     text = [];
@@ -298,8 +319,7 @@ const resetGame = () => {
     picture();
     continueBtn.style.display = 'flex';
     descriptionEl.style.display = 'none';
-    // timer.style.display = 'none';
-    stopTimer()
+    stopTimer();
 }
 
 // Initialize the game
@@ -307,7 +327,7 @@ const initGame = () => {
     answer = selectCategory()
     generateKeyboardButtons();
     renderWord();
-    startTimer()
+    selectMode(localStorage.getItem('t'));
 }
 
 // Start the game

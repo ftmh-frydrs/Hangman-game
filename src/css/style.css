@@ -12,7 +12,7 @@ body {
 }
 
 .bacground{
-    background-image: url(../image/board.png);
+    background-image: url(/assets/image/board.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-clip: border-box;

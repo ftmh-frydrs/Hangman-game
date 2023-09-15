@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./src/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Hangman</title>
@@ -21,11 +21,14 @@
         </button>
        </div>
 
-       <div class="flex mx-5">
+       <div class="flex mx-5 totalTimer">
         <i id="timer-icon" class="fas fa-clock text-4xl text-gray-900"></i>
        <div id="timer" class="hidden">
           <span id="timer-countdown" class="text-4xl text-gray-900">10</span>
-        </div>
+        </div>  
+          <!-- <button id="stopTimerButton"  class="text-4xl text-gray-900 mx-5" onclick="togglestop()">
+            <i class="fas fa-pause"></i>  
+        </button>      -->
        </div>
     </div>
 
